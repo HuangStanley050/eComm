@@ -9,7 +9,7 @@ const usersRouter = require("./routes/users");
 
 const app = express();
 
-// view engine setup
+
 
 app.use(logger("dev"));
 
