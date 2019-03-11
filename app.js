@@ -6,10 +6,12 @@ const logger = require("morgan");
 const bodyParser = require("body-parser");
 const indexRouter = require("./routes/index");
 const filesRouter = require("./routes/files");
+const GridFsStorage = require("multer-gridfs-storage");
 const multer = require("multer");
 const cors = require("cors");
+const database = require("./config/database");
 const app = express();
-const upload = multer({ storage: multer.memoryStorage() });
+//const upload = multer({ storage: multer.memoryStorage() });
 
 app.use(logger("dev"));
 
@@ -21,7 +23,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 app.use("/", indexRouter);
-app.use("/api/file", upload.single("file"), filesRouter);
+app.use("/api/file", filesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
