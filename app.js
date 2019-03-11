@@ -6,10 +6,9 @@ const logger = require("morgan");
 const bodyParser = require("body-parser");
 const indexRouter = require("./routes/index");
 const filesRouter = require("./routes/files");
-const GridFsStorage = require("multer-gridfs-storage");
-const multer = require("multer");
+
 const cors = require("cors");
-const database = require("./config/database");
+
 const app = express();
 //const upload = multer({ storage: multer.memoryStorage() });
 
