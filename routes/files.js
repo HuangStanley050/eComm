@@ -4,15 +4,16 @@ const multer = require("multer");
 const GridFsStorage = require("multer-gridfs-storage");
 const database = require("../config/database");
 const UpLoadController = require("../controllers/upload");
+const FileController = require("../controllers/file");
 
 const storage = new GridFsStorage({
   url: database.connection,
 
   file: (req, file) => {
-    console.log(req);
-    if (file.mimetype === "image/jpeg") {
+    //console.log(req);
+    if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
       return {
-        bucketName: "productImg",
+        bucketName: "product",
         filename: file.originalname
       };
     } else {
@@ -24,5 +25,6 @@ const storage = new GridFsStorage({
 const upload = multer({ storage });
 
 router.post("/uploadProduct", upload.single("file"), UpLoadController.upLoad);
+router.get("/fetchProducts", FileController.fetchProducts);
 
 module.exports = router;
