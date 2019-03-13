@@ -25,6 +25,8 @@ const storage = new GridFsStorage({
 const upload = multer({ storage });
 
 router.post("/uploadProduct", upload.single("file"), UpLoadController.upLoad);
-router.get("/fetchProducts", FileController.fetchProducts);
+router
+  .get("/fetchProducts", FileController.fetchProducts)
+  .get("/image/:id", FileController.getImage);
 
 module.exports = router;
