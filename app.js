@@ -6,6 +6,7 @@ const logger = require("morgan");
 const bodyParser = require("body-parser");
 const indexRouter = require("./routes/index");
 const filesRouter = require("./routes/files");
+const paymentRouter = require("./routes/payment");
 
 const cors = require("cors");
 
@@ -23,6 +24,7 @@ app.use(cors());
 
 app.use("/", indexRouter);
 app.use("/api/file", filesRouter);
+app.use("/api/payment", paymentRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
