@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const indexRouter = require("./routes/index");
 const filesRouter = require("./routes/files");
 const paymentRouter = require("./routes/payment");
+const authRouter = require("./routes/auth");
 
 const cors = require("cors");
 
@@ -24,6 +25,7 @@ app.use(cors());
 
 app.use("/", indexRouter);
 app.use("/api/file", filesRouter);
+app.use("/api/auth", authRouter);
 app.use("/api/payment", paymentRouter);
 
 // catch 404 and forward to error handler

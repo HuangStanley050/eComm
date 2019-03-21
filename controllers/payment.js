@@ -16,5 +16,4 @@ exports.makePayment = async (req, res, next) => {
     console.log(err);
     next(err);
   }
-  //res.json(token);
 };
