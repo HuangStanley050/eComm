@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const passport = require("passport");
 const bodyParser = require("body-parser");
 const indexRouter = require("./routes/index");
 const filesRouter = require("./routes/files");
@@ -21,6 +22,9 @@ app.use(bodyParser.json());
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(passport.initialize());
+require("./config/passport")(passport);
+
 app.use(cors());
 
 app.use("/", indexRouter);

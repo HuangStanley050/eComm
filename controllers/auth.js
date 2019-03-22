@@ -12,7 +12,7 @@ exports.regiser = (req, res, next) => {
       if (user) {
         const error = new Error();
         error.message = "user already signed up";
-        error.status = 404;
+        error.status = 400;
         throw error;
       }
 
@@ -33,4 +33,34 @@ exports.regiser = (req, res, next) => {
       next(err);
     });
 };
-exports.login = (req, res, next) => {};
+exports.login = (req, res, next) => {
+  const { email, password } = req.body;
+  let foundUser;
+
+  User.findOne({ email })
+    .then(user => {
+      if (!user) {
+        const error = new Error("user not in the system");
+        error.status = 401;
+        throw error;
+      }
+      foundUser = user;
+      return bcrypt.compare(password, user.password);
+    })
+    .then(result => {
+      // console.log(result);
+      // res.send("finished");
+      if (!result) {
+        const error = new Error("Password don't match");
+        error.status = 400;
+        throw error;
+      }
+      const payload = {
+        id: foundUser.id,
+        email: foundUser.email
+      };
+      const token = jwt.sign(payload, jwt_secret, { expiresIn: "1h" });
+      res.json({ login: "succcess", token });
+    })
+    .catch(err => next(err));
+};
