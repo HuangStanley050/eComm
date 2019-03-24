@@ -14,11 +14,18 @@ module.exports = passport => {
       User.findById(jwt_payload.id)
         .then(user => {
           if (user) {
+            const adminID = "5c94171902e32508b273c0cb";
+            if (adminID !== user.id) {
+              console.log("user is not admin");
+              return done(new Error("user not an admin"));
+            }
             return done(null, user);
           }
           return done(null, false);
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          console.log(err);
+        });
     })
   );
 };

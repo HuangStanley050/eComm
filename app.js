@@ -31,6 +31,13 @@ app.use("/", indexRouter);
 app.use("/api/file", filesRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/payment", paymentRouter);
+app.use(
+  "/api/testifadmin",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.json(req.user);
+  }
+);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
