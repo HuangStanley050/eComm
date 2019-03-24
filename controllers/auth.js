@@ -59,8 +59,13 @@ exports.login = (req, res, next) => {
         id: foundUser.id,
         email: foundUser.email
       };
+      const userInfo = {
+        name: foundUser.name,
+        email: foundUser.email,
+        admin: foundUser.admin
+      };
       const token = jwt.sign(payload, jwt_secret, { expiresIn: "1h" });
-      res.json({ login: "succcess", token });
+      res.json({ login: "succcess", token, userInfo });
     })
     .catch(err => next(err));
 };
