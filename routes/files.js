@@ -6,7 +6,7 @@ const database = require("../config/database");
 const UpLoadController = require("../controllers/upload");
 const FileController = require("../controllers/file");
 const passport = require("passport");
-const passportAdmin = require("../config/passportAdmin");
+//const passportAdmin = require("../config/passportAdmin");
 
 const storage = new GridFsStorage({
   url: database.connection,
@@ -26,23 +26,17 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage });
 
-require("../config/passportAdmin")(passport);
+//require("../config/passportAdmin")(passport);
 
 router.post(
   "/uploadProduct",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt-admin", { session: false }),
   upload.single("file"),
   UpLoadController.upLoad
 );
+
 router
   .get("/fetchProducts", FileController.fetchProducts)
   .get("/image/:id", FileController.getImage);
-// .get(
-//   "/testifadmin",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     res.json(req.user);
-//   }
-// );
 
 module.exports = router;
