@@ -5,7 +5,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const passport = require("passport");
 const bodyParser = require("body-parser");
-const indexRouter = require("./routes/index");
+
 const filesRouter = require("./routes/files");
 const paymentRouter = require("./routes/payment");
 const authRouter = require("./routes/auth");
@@ -28,7 +28,6 @@ require("./config/passport")(passport);
 
 app.use(cors());
 
-app.use("/", indexRouter);
 app.use("/api/file", filesRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/payment", paymentRouter);
