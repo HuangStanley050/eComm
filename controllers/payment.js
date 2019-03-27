@@ -2,6 +2,7 @@ const secretKey = process.env.STRIPE_KEY;
 const Order = require("../models/order");
 //const User = require("../models/user");
 const stripe = require("stripe")(secretKey);
+const mongoose = require("mongoose");
 
 exports.makePayment = async (req, res, next) => {
   const { token, amount, products } = req.body;
@@ -11,8 +12,9 @@ exports.makePayment = async (req, res, next) => {
     quantity: product.quantity
   }));
 
-  const purchaser = {
-    id: req.user._id,
+  const purchaserId = mongoose.Types.ObjectId(req.user._id);
+
+  const purchaserDetails = {
     name: req.user.name,
     email: req.user.email
   };
@@ -27,7 +29,8 @@ exports.makePayment = async (req, res, next) => {
     });
     let order = new Order({
       orders,
-      purchaser,
+      purchaserId,
+      purchaserDetails,
       date: time,
       total_amount: amount
     });

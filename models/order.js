@@ -4,7 +4,11 @@ const Schema = mongoose.Schema;
 const orderSchema = new Schema({
   //orders: [{ productId: { type: Schema.Types.ObjectId }, quantity: Number }],
   orders: [],
-  purchaser: { id: Schema.Types.ObjectId, name: String, email: String },
+  purchaserId: Schema.Types.ObjectId,
+  purchaserDetails: {
+    name: String,
+    email: String
+  },
   date: String,
   total_amount: Number
 });
