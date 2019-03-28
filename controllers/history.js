@@ -1,21 +1,17 @@
 const Order = require("../models/order");
-//const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
 exports.getHistory = async (req, res, next) => {
   const purchaserId = req.user.id;
   let all_orders = [];
-  let history = [];
+
   try {
-    all_orders = await Order.find();
-    all_orders.forEach(order => {
-      if (order.purchaserId.toString() === purchaserId) {
-        history.push(order);
-      }
+    all_orders = await Order.find({
+      purchaserId: mongoose.Types.ObjectId(purchaserId)
     });
-    console.log(history);
   } catch (err) {
     console.log(err);
     next(err);
   }
-  res.json(history);
+  res.json(all_orders);
 };

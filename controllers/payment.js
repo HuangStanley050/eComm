@@ -9,7 +9,8 @@ exports.makePayment = async (req, res, next) => {
 
   const orders = products.map(product => ({
     productId: product._id,
-    quantity: product.quantity
+    quantity: product.quantity,
+    title: product.title
   }));
 
   const purchaserId = mongoose.Types.ObjectId(req.user._id);
